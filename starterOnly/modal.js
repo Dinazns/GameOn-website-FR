@@ -38,19 +38,26 @@ function closeModal () {
   modalbg.style.display = "none";
 }
 
+// fonction qui récupère chacune des classes error pour lui attribué un msg d'erreur par la suite, 
 function validate() {
-  if (prenom.value == "" || !isNaN(prenom.value)) {
+  const regex = /^[a-zA-Z-]+$/; // Expression régulière pour les lettres min, maj et tirets
+
+  if (prenom.value == "" || !isNaN(prenom.value) || !regex.test(prenom.value) || prenom.value == "--") {
     document.getElementsByClassName("error")[0].innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
+    prenom.classList.add(input); // Ajoute la classe CSS d'erreur 
     return false;
   } else {
     document.getElementsByClassName("error")[0].innerHTML = "";
+    prenom.classList.remove(input); // Retire la classe CSS d'erreur 
   }
 
-  if (nom.value == "" || !isNaN(nom.value)) {
+  if (nom.value == "" || !isNaN(nom.value) || !regex.test(nom.value) || nom.value == "--") {
     document.getElementsByClassName("error")[1].innerHTML = "Veuillez renseigner un nom.";
+    nom.classList.add('text-control'); 
     return false;
   } else {
     document.getElementsByClassName("error")[1].innerHTML = "";
+    nom.classList.remove('text-control'); 
   }
 
   if (email.value == "") {
