@@ -15,6 +15,9 @@ const formData = document.querySelectorAll(".formData");
 const close = document.querySelector(".close");
 const btnSubmit = document.getElementsByClassName("btn-submit")[0];
 
+// DOM Elements Modal de confirmation
+
+
 // Implémentation entrées du formulaire
 
 const prenom = document.getElementById("first");
@@ -24,11 +27,14 @@ const birthdate = document.getElementById("birthdate");
 const nbConcours = document.getElementById("quantity");
 const btnRadio = document.getElementsByClassName("checkbox-input");
 const checkboxCondition = document.getElementById("checkbox1");
+const closeSuccessModal = document.getElementsByClassName("btn-close")[0];
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener("click", launchModal));
-close.addEventListener("click", closeModal);
 
+document.getElementsByClassName("btn-close")[0]
+close.addEventListener("click", closeModal);
+closeSuccessModal.addEventListener("click", closeModal);
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
@@ -38,47 +44,60 @@ function closeModal () {
   modalbg.style.display = "none";
 }
 
-// fonction qui récupère chacune des classes error pour lui attribué un msg d'erreur par la suite, 
 function validate() {
-  const regex = /^[a-zA-Z-]+$/; // Expression régulière pour les lettres min, maj et tirets
-
-  if (prenom.value == "" || !isNaN(prenom.value) || !regex.test(prenom.value) || prenom.value == "--") {
+  if (prenom.value == "" || !isNaN(prenom.value)) {
     document.getElementsByClassName("error")[0].innerHTML = "Veuillez entrer 2 caractères ou plus pour le champ du prénom.";
-    prenom.classList.add(input); // Ajoute la classe CSS d'erreur 
+    prenom.parentElement.setAttribute('data-error-visible', 'true');
+    prenom.style.border = '2px solid #e54858';
     return false;
   } else {
     document.getElementsByClassName("error")[0].innerHTML = "";
-    prenom.classList.remove(input); // Retire la classe CSS d'erreur 
+    prenom.parentElement.setAttribute('data-error-visible', 'false');
+    prenom.style.border = 'solid #279e7a 0.19rem';
   }
 
-  if (nom.value == "" || !isNaN(nom.value) || !regex.test(nom.value) || nom.value == "--") {
+  if (nom.value == "" || !isNaN(nom.value)) {
     document.getElementsByClassName("error")[1].innerHTML = "Veuillez renseigner un nom.";
-    nom.classList.add('text-control'); 
+    nom.parentElement.setAttribute('data-error-visible', 'true');
+    nom.style.border = '2px solid #e54858';
     return false;
   } else {
     document.getElementsByClassName("error")[1].innerHTML = "";
-    nom.classList.remove('text-control'); 
+    nom.parentElement.setAttribute('data-error-visible', 'false');
+    nom.style.border = 'solid #279e7a 0.19rem';
   }
 
   if (email.value == "") {
     document.getElementsByClassName("error")[2].innerHTML = "Veuillez renseigner un email.";
+    email.parentElement.setAttribute('data-error-visible', 'true');
+    email.style.border = '2px solid #e54858';
     return false;
   } else {
     document.getElementsByClassName("error")[2].innerHTML = "";
+    email.parentElement.setAttribute('data-error-visible', 'false');
+    email.style.border = 'solid #279e7a 0.19rem';
   }
 
   if (birthdate.value == "") {
     document.getElementsByClassName("error")[3].innerHTML = "Vous devez entrer votre date de naissance.";
+    birthdate.parentElement.setAttribute('data-error-visible', 'true');
+    birtthdate.style.border = '2px solid #e54858';
     return false;
   } else {
     document.getElementsByClassName("error")[3].innerHTML = "";
+    birthdate.parentElement.setAttribute('data-error-visible', 'false');
+    birthdate.style.border = 'solid #279e7a 0.19rem';
   }
 
   if (nbConcours.value == "") {
     document.getElementsByClassName("error")[4].innerHTML = "Veuillez renseigner un nombre.";
+    nbConcours.parentElement.setAttribute('data-error-visible', 'true');
+    nbConcours.style.border = '2px solid #e54858';
     return false;
   } else {
     document.getElementsByClassName("error")[4].innerHTML = "";
+    nbConcours.parentElement.setAttribute('data-error-visible', 'false');
+    nbConcours.style.border = 'solid #279e7a 0.19rem';
   }
 
   // on parcours la liste radio, on récupère le bouton et son index si l'index est au dessus de 6 on retourne null sinon on retourne le status du bouton
@@ -106,12 +125,23 @@ function verification() {
   const v = validate();
   
   if(v === true) {
-    setTimeout(() => {
-      alert('Merci ! Votre réservation a été reçue.');
-    }, 0);
+    
 
     return true;
   }
 
   return false;
 }
+
+// ouverture de la modale de confirmation :
+
+btnSubmit.addEventListener('click', e => {
+  e.preventDefault();  
+  validate();
+
+  const confirmationSubmit = document.getElementsByClassName('confirmation_submit')[0];
+  const form = document.querySelector('.modal-body');
+
+  form.style.display = 'none';
+  confirmationSubmit.style.display = "block";
+})

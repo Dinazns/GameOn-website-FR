@@ -226,12 +226,12 @@ input {
 .formData[data-error-visible="true"] .text-control {
   border: 2px solid #e54858;
 }
-
+/* 
 input[data-error]::after {
     content: attr(data-error);
     font-size: 0.4em;
     color: red;
-} 
+} */
 .checkbox-label,
 .checkbox2-label {
   position: relative;
@@ -527,3 +527,38 @@ footer {
   }
 }
 
+/* confirmation submit modal */
+
+.confirmation_submit {
+  display: none;
+
+  z-index: 1;
+ 
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  max-height: 800px;
+  text-align: center;
+  font-size: 40px;
+  font-weight: normal;
+
+  padding-top: 200px;
+  padding-bottom: 100px;
+  color: white;
+  background: rgb(35, 35, 35);
+  
+}
+
+.btn-close {
+  font-size: 1rem;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  background: rgb(254, 20, 47);
+  margin: 230px auto 100px;
+  border-radius: 7px;
+  padding: 12px 82px;
+  border-width: 0px;
+  border-style: initial;
+  border-color: initial;
+  border-image: initial;
+}
