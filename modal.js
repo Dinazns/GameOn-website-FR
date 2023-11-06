@@ -66,15 +66,15 @@ function closeModal() {
   modalbg.style.display = "none";
   modalConfirmation.style.display = "none";
 
-  // Réinitialisation du formulaire
-  const form = document.querySelector('form');
-  form.reset();
+  // // Réinitialisation du formulaire
+  // const form = document.querySelector('form');
+  // form.reset();
 }
 
 // Ouverture de la modal de confirmation
 function openConfirm() {
-  modalConfirmation.style.display = "block";
   page = 1;
+  modalConfirmation.style.display = "block";
 }
 
 
