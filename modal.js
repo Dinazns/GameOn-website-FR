@@ -57,7 +57,7 @@ function launchModal() {
   window.scrollTo(0, 0);
 
   if (page === 1 ) {
-    launchModal()
+    openConfirm();
   }
 }
 
