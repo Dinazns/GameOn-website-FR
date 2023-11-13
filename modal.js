@@ -80,7 +80,7 @@ function openConfirm() {
 
 // Fonction  général pour l'affichage des erreurs ( msg et champs )
 function checkValidity(inputElement, errorElement, msg, regexActive) {
-  const regex = /^[a-zA-Z-]+$/;
+  const regex = /^[a-zA-Z-]{2,50}$/;
 
   if((regexActive) && (inputElement.value == "" || !isNaN(inputElement.value) || !regex.test(inputElement.value) || inputElement.value == "--")) {
     errorElement.innerHTML = msg; 
@@ -109,14 +109,60 @@ function checkValidity(inputElement, errorElement, msg, regexActive) {
   return true;
 }
 
+function checkBirdhate(dateString) {
+  // Vérifie si la chaîne est au format AAAA-MM-JJ
+  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+  // Convertit la chaîne en objet Date
+  const dateOfBirth = new Date(dateString);
+  // Calcul de la différence d'années
+    const ageDifference = new Date() - dateOfBirth;
+    const ageInYears = ageDifference / (365.25 * 24 * 60 * 60 * 1000);
+
+  // Vérifie si la date est valide
+  if (isNaN(dateOfBirth.getTime()) || !dateRegex.test(dateString) || ageInYears < 18) {
+    document.getElementsByClassName("error")[3].innerHTML = "Vous devez entrer votre date de naissance.";    
+    document.getElementsByClassName("error")[3].style.color = 'red';
+    document.getElementsByClassName("error")[3].style.fontSize = '12px';  
+    birthdate.parentElement.setAttribute('data-error-visible', 'true');
+    birthdate.style.border = '2px solid #e54858';
+    return false;
+  }
+  document.getElementsByClassName("error")[3].innerHTML = "";
+  birthdate.parentElement.setAttribute('data-error-visible', 'false');
+  birthdate.style.border = 'solid #279e7a 0.19rem';
+  // Vérifie si l'âge est supérieur ou égal à 18 ans
+  return ageInYears >= 18;
+}
+
+
+function checkConcoursquantite () {
+  if (nbConcours.value.trim() == "" || isNaN(nbConcours.value.trim()) == true || nbConcours.value.trim() < 0 || nbConcours.value.trim() > 99) {
+    
+      document.getElementsByClassName("error")[4].innerHTML = "Veuillez renseigner un nombre.";    
+      document.getElementsByClassName("error")[4].style.color = 'red';
+      document.getElementsByClassName("error")[4].style.fontSize = '12px';  
+      nbConcours.parentElement.setAttribute('data-error-visible', 'true');
+      nbConcours.style.border = '2px solid #e54858';
+    
+      return false;
+  }
+
+      document.getElementsByClassName("error")[4].innerHTML = "";    
+      nbConcours.parentElement.setAttribute('data-error-visible', 'false');
+      nbConcours.style.border = '2px solid #279e7a';
+    
+      return true;  
+}
 
 // Fonction avec valeurs des paramètres de checkvalidity 
 function validate() {
   const firstnameValid = checkValidity(firstname, document.getElementsByClassName("error")[0], "Veuillez entrer 2 caractères ou plus pour le champ du prénom.", true);
   const lastnameValid = checkValidity(nom, document.getElementsByClassName("error")[1], "Veuillez renseigner un nom.", true);
   const emailValid = checkValidity(email, document.getElementsByClassName("error")[2], "Veuillez renseigner un email.", false);
-  const birthdateValid = checkValidity(birthdate, document.getElementsByClassName("error")[3], "Vous devez entrer votre date de naissance.", false);
-  const nbConcoursValid = checkValidity(nbConcours, document.getElementsByClassName("error")[4], "Veuillez renseigner un nombre.", false);
+  // const birthdateValid = checkValidity(birthdate, document.getElementsByClassName("error")[3], "Vous devez entrer votre date de naissance.", false);
+  const nbConcoursValid = checkConcoursquantite();
+  const birthdateValid = checkBirdhate(birthdate.value.trim());
 
   let conditions = false;
 
